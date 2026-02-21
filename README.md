@@ -1,3 +1,19 @@
+Order Manager - Sistema de Pedidos com JPA
+Sistema desenvolvido para estudo aprofundado de mapeamento de relacionamentos com JPA/Hibernate em uma aplicação Spring Boot.
+
+O projeto simula um domínio de gestão de pedidos, onde é possível cadastrar:
+
+Categorias (ex: eletrônicos, games)
+
+Fornecedores (ex: atlantic, game now)
+
+Produtos (vinculados a uma categoria e um fornecedor)
+
+Pedidos (que agregam múltiplos produtos)
+
+O foco principal está na camada de persistência, explorando como mapear corretamente os relacionamentos entre entidades, controlar carregamento de dados e manter a consistência do banco relacional.
+
+
 🧩 Entidades e Relacionamentos
 
 // Product.java
