@@ -1,21 +1,20 @@
-Order Manager - Sistema de Pedidos com JPA
-Sistema desenvolvido para estudo aprofundado de mapeamento de relacionamentos com JPA/Hibernate em uma aplicação Spring Boot.
+# Order Manager - JPA Relationship Mapping
 
-O projeto simula um domínio de gestão de pedidos, onde é possível cadastrar:
+System developed for in-depth study of entity relationship mapping with JPA/Hibernate in a Spring Boot application.
 
-Categorias (ex: eletrônicos, games)
+The project simulates an order management domain, allowing you to register:
+- **Categories** (e.g. electronics, games)
+- **Suppliers** (e.g. atlantic, game now)
+- **Products** (linked to a category and a supplier)
+- **Orders** (aggregating multiple products)
 
-Fornecedores (ex: atlantic, game now)
+The main focus is on the persistence layer, exploring how to correctly map relationships between entities, control data loading and maintain relational database consistency.
 
-Produtos (vinculados a uma categoria e um fornecedor)
+---
 
-Pedidos (que agregam múltiplos produtos)
+## 🧩 Entities and Relationships
 
-O foco principal está na camada de persistência, explorando como mapear corretamente os relacionamentos entre entidades, controlar carregamento de dados e manter a consistência do banco relacional.
-
-
-🧩 Entidades e Relacionamentos
-
+```java
 // Product.java
 @ManyToOne
 private Category category;
@@ -40,68 +39,96 @@ private List<Product> products;
 // Supplier.java
 @Entity
 public class Supplier {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private String name;
 }
+```
 
-📌 O que foi implementado
-Conceito	Implementação
-@ManyToOne	Product → Category / Product → Supplier
-@OneToMany	Category → Products (bidirecional)
-@ManyToMany	Order ↔ Product (com tabela intermediária)
-Cascade	CascadeType.ALL em Category → Products
-Fetch	EAGER em Category.products e Order.products
-Bidirecionalidade	setProducts() atualiza ambos os lados
-Chave estrangeira	@JoinColumn(name = "supplier_id")
+---
 
-🛠️ Tecnologias
-Java 17
-Spring Boot
-Spring Data JPA
-PostgreSQL
-Maven
+## 📌 What was implemented
 
-▶️ Como executar
-1. Configure as variáveis de ambiente:
+| Concept | Implementation |
+|---|---|
+| `@ManyToOne` | Product → Category / Product → Supplier |
+| `@OneToMany` | Category → Products (bidirectional) |
+| `@ManyToMany` | Order ↔ Product (with join table) |
+| Cascade | `CascadeType.ALL` on Category → Products |
+| Fetch | `EAGER` on Category.products and Order.products |
+| Bidirectionality | `setProducts()` updates both sides |
+| Foreign key | `@JoinColumn(name = "supplier_id")` |
 
-properties
-DB_OM_URL=jdbc:postgresql://localhost:5432/seu_banco
-DB_OM_USERNAME=seu_usuario
-DB_OM_PASSWORD=sua_senha
+---
 
-2. Execute a aplicação:
+## 🛠️ Technologies
 
-bash
+- Java 17
+- Spring Boot
+- Spring Data JPA / Hibernate
+- PostgreSQL
+- Maven
+
+---
+
+## ▶️ How to run
+
+1. Configure environment variables:
+
+```properties
+DB_OM_URL=jdbc:postgresql://localhost:5432/your_database
+DB_OM_USERNAME=your_username
+DB_OM_PASSWORD=your_password
+```
+
+2. Run the application:
+
+```bash
 ./mvnw spring-boot:run
+```
 
-📊 Exemplo de saída
-text
-Products on the electronics category: 
- - notebook
- - Mouse
- - Audio Interface
+---
 
-Orders and its respective products: 
+## 📊 Sample output
+
+```
+Products on the electronics category:
+ * notebook
+ * Mouse
+ * Audio Interface
+
+Orders and its respective products:
 Order 1:
- - notebook
- - Mouse
- - Audio Interface
- - the last of us
- - elden ring
- - playstation 5
+ * notebook
+ * Mouse
+ * Audio Interface
+ * the last of us
+ * elden ring
+ * playstation 5
 
-Products and its respective suppliers: 
+Products and its respective suppliers:
 Product: notebook, Supplier: atlantic
 Product: Mouse, Supplier: atlantic
 Product: Audio Interface, Supplier: atlantic
 Product: the last of us, Supplier: game now
+```
 
-🧠 Aprendizados
-Mapeamento de relacionamentos @OneToMany, @ManyToOne e @ManyToMany
-Uso de cascade para propagar operações
-Diferença entre FetchType.LAZY e EAGER
-Relacionamentos bidirecionais e consistência de dados
-Configuração de chaves estrangeiras e tabelas de junção
+---
 
-Projeto de estudo - Programa ONE (Oracle + Alura)
+## 🧠 Key learnings
+
+- Mapping `@OneToMany`, `@ManyToOne` and `@ManyToMany` relationships
+- Using cascade to propagate operations
+- Difference between `FetchType.LAZY` and `EAGER`
+- Bidirectional relationships and data consistency
+- Configuring foreign keys and join tables
+
+---
+
+## 📝 About
+
+Study project — ONE Program (Oracle Next Education + Alura)
+
+**Author:** Paulo Emilio de Toledo Jr
+[LinkedIn](https://www.linkedin.com/in/pauloemilio-tech) | [GitHub](https://github.com/paulojrtoledo)
